@@ -25,7 +25,7 @@ Open: `http://127.0.0.1:5000`
 ## 2) Folder structure
 
 ```text
-Portfolio-/
+Portfolio/
 ├── app.py
 ├── requirements.txt
 ├── README.md
@@ -49,6 +49,6 @@ Portfolio-/
 
 ## Customize placeholders
 
-- Update GitHub/LinkedIn URLs in `/home/runner/work/Portfolio-/Portfolio-/templates/index.html`.
-- Add your resume as `/home/runner/work/Portfolio-/Portfolio-/static/resume.pdf`.
-- Edit project descriptions in `/home/runner/work/Portfolio-/Portfolio-/app.py`.
+- Update GitHub/LinkedIn URLs in `/home/runner/work/Portfolio/Portfolio/templates/index.html`.
+- Add your resume as `/home/runner/work/Portfolio/Portfolio/static/resume.pdf`.
+- Edit project descriptions in `/home/runner/work/Portfolio/Portfolio/app.py`.
