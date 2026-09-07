@@ -1,0 +1,38 @@
+:root {
+  --hero-gradient: linear-gradient(120deg, #0f172a, #1d4ed8 60%, #2563eb);
+}
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #f8fafc;
+}
+
+.hero-section {
+  background: var(--hero-gradient);
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.letter-space {
+  letter-spacing: 0.08em;
+}
+
+.tech-pill {
+  background: #fff;
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+  padding: 0.65rem 0.75rem;
+  font-weight: 600;
+}
+
+.project-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.8rem 1.5rem rgba(15, 23, 42, 0.15);
+}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-section py-5 py-md-6 text-white">
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <p class="text-uppercase fw-semibold letter-space mb-3">4th-Year Information Technology Student</p>
+        <h1 class="display-5 fw-bold mb-3">Building modern software experiences for the next generation.</h1>
+        <p class="lead mb-4">
+          I focus on full-stack development, mobile apps, and software engineering—an upcoming graduate ready to contribute to the tech industry from day one.
+        </p>
+        <a class="btn btn-light btn-lg px-4" href="#projects">View My Projects</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    <p class="text-secondary mb-0">
+      I am a 4th-year IT student with leadership experience in university tech and esports organizations.
+      I enjoy building impactful systems that solve real user problems and prepare teams for scalable growth.
+    </p>
+  </div>
+</section>
+
+<section id="stack" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="row g-3">
+      {% for tech in tech_stack %}
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="tech-pill text-center">{{ tech }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="section-title">Projects Gallery</h2>
+    <div class="row g-4">
+      {% for project in projects %}
+      <div class="col-md-6">
+        <div class="card project-card h-100 border-0 shadow-sm">
+          <div class="card-body">
+            <h3 class="h5 mb-2">{{ project.name }}</h3>
+            <p class="text-primary small fw-semibold">{{ project.category }}</p>
+            <p class="text-secondary mb-0">{{ project.description }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="py-5 bg-dark text-white">
+  <div class="container">
+    <h2 class="section-title text-white">Contact</h2>
+    <div class="d-flex flex-wrap gap-3 align-items-center">
+      <a class="btn btn-outline-light" href="https://github.com/your-username" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn btn-outline-light" href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a class="btn btn-primary btn-lg" href="{{ url_for('static', filename='resume.pdf') }}" download>Download Resume</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
