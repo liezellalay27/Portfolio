@@ -1,6 +1,6 @@
 # Portfolio Website (Flask)
 
-A clean, modern, responsive personal portfolio starter built with Flask + Bootstrap.
+A modern, responsive personal portfolio built with Flask + Bootstrap.
 
 ## 1) Terminal setup commands
 
@@ -47,8 +47,8 @@ Portfolio/
 - `templates/index.html`: Hero, About Me, Tech Stack, Projects Gallery, and Contact sections.
 - `static/css/styles.css`: Custom styling for a polished UI.
 
-## Customize placeholders
+## Customize the portfolio
 
-- Update GitHub/LinkedIn URLs in `/home/runner/work/Portfolio/Portfolio/templates/index.html`.
-- Add your resume as `/home/runner/work/Portfolio/Portfolio/static/resume.pdf`.
-- Edit project descriptions in `/home/runner/work/Portfolio/Portfolio/app.py`.
+- Update the GitHub URL and contact details in `templates/index.html`.
+- Add a resume link when `static/resume.pdf` is available.
+- Edit project descriptions in `app.py`.
