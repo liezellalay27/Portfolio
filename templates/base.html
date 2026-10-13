@@ -61,6 +61,34 @@
 
       document.querySelectorAll('[data-close-modal]').forEach((element) => element.addEventListener('click', closeModal));
       document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
+
+      const skillTabs = document.querySelectorAll('.skill-tab');
+      const skillGroups = document.querySelectorAll('.skill-group');
+      skillTabs.forEach((tab) => tab.addEventListener('click', () => {
+        skillTabs.forEach((item) => {
+          const selected = item === tab;
+          item.classList.toggle('is-active', selected);
+          item.setAttribute('aria-selected', String(selected));
+        });
+        skillGroups.forEach((group) => group.classList.toggle('is-active', group.dataset.skillGroup === tab.dataset.skillCategory));
+      }));
+      skillTabs.forEach((tab, index) => tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? skillTabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + skillTabs.length) % skillTabs.length;
+        skillTabs[nextIndex].focus();
+        skillTabs[nextIndex].click();
+      }));
+
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const observedSections = document.querySelectorAll('main section[id]');
+      const navigationObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`));
+        });
+      }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+      observedSections.forEach((section) => navigationObserver.observe(section));
     </script>
   </body>
 </html>

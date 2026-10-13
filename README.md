@@ -32,10 +32,13 @@ Portfolio/
 ├── templates/
 │   ├── base.html
 │   └── index.html
-└── static/
-    ├── css/
-    │   └── styles.css
-    └── resume.pdf   # add your actual resume file here
+└── public/
+    └── static/
+        ├── css/styles.css
+        └── images/
+            ├── liezel-execom.jpg
+            ├── liezel-formal-cutout.png
+            └── liezel-formal.jpg
 ```
 
 ---
@@ -45,10 +48,28 @@ Portfolio/
 - `app.py`: Flask app with the `/` route that renders your portfolio page.
 - `templates/base.html`: Base template with Bootstrap CDN and stylesheet link.
 - `templates/index.html`: Hero, About Me, Tech Stack, Projects Gallery, and Contact sections.
-- `static/css/styles.css`: Custom styling for a polished UI.
+- `public/static/`: CSS and image assets served by Vercel's CDN.
 
 ## Customize the portfolio
 
 - Update the GitHub URL and contact details in `templates/index.html`.
-- Add a resume link when `static/resume.pdf` is available.
+- Add a resume link when `public/static/resume.pdf` is available.
 - Edit project descriptions in `app.py`.
+
+## Deploy to Vercel
+
+This Flask app is detected by Vercel from `app.py` and `requirements.txt`. Static files live under `public/static/`, so Vercel serves them from its CDN while the configured Flask static folder keeps local development working.
+
+For a preview deployment, install the Vercel CLI and run:
+
+```bash
+vercel
+```
+
+After reviewing the preview, publish to production with:
+
+```bash
+vercel --prod
+```
+
+You can also import the Git repository at [vercel.com/new](https://vercel.com/new); Vercel will deploy on pushes to the configured production branch.

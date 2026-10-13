@@ -47,7 +47,19 @@
         <p class="eyebrow">Education &amp; skills</p>
         <h2 class="detail-title">Learning by<br /><em>building.</em></h2>
         <div class="education-item"><span>Education</span>{% for item in education %}<strong>{{ item.degree }} <i>{{ item.years }}</i></strong><small>{{ item.school }} · {{ item.location }}</small>{% endfor %}</div>
-        <div class="skills-block"><span>Skills</span><div class="skill-list">{% for category, items in skills.items() %}{% for item in items %}<span>{{ item }}</span>{% endfor %}{% endfor %}</div></div>
+        <div class="skills-block">
+          <span>Skills</span>
+          <div class="skill-tabs" role="tablist" aria-label="Skill categories">
+            {% for category, items in skills.items() %}
+            <button class="skill-tab{% if loop.first %} is-active{% endif %}" id="skill-tab-{{ loop.index }}" type="button" role="tab" aria-controls="skill-panel-{{ loop.index }}" aria-selected="{{ 'true' if loop.first else 'false' }}" data-skill-category="{{ category }}">{{ category }}</button>
+            {% endfor %}
+          </div>
+          <div class="skill-list" aria-live="polite">
+            {% for category, items in skills.items() %}
+            <div class="skill-group{% if loop.first %} is-active{% endif %}" id="skill-panel-{{ loop.index }}" role="tabpanel" aria-labelledby="skill-tab-{{ loop.index }}" data-skill-group="{{ category }}">{% for item in items %}<span>{{ item }}</span>{% endfor %}</div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
       <div class="process-block">
         <p class="eyebrow">How I work</p>
