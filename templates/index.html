@@ -1,70 +1,103 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero-section py-5 py-md-6 text-white">
-  <div class="container py-5">
-    <div class="row align-items-center">
-      <div class="col-lg-8">
-        <p class="text-uppercase fw-semibold letter-space mb-3">4th-Year Information Technology Student</p>
-        <h1 class="display-5 fw-bold mb-3">Building modern software experiences for the next generation.</h1>
-        <p class="lead mb-4">
-          I focus on full-stack development, mobile apps, and software engineering—an upcoming graduate ready to contribute to the tech industry from day one.
-        </p>
-        <a class="btn btn-light btn-lg px-4" href="#projects">View My Projects</a>
+<main id="top">
+  <section class="hero-section">
+    <div class="container hero-content">
+      <div class="hero-kicker"><span>{{ profile.location }}</span><span>Available for opportunities</span></div>
+      <div class="hero-title-wrap">
+        <p class="hero-script">Hello, I'm</p>
+        <h1>{{ profile.short_name }}</h1>
+        <p class="hero-role">PROJECT MANAGER<br />FRONTEND DEVELOPER</p>
+      </div>
+      <div class="hero-copy">
+        <p>{{ profile.summary }}</p>
+        <a class="hero-link" href="#projects">Explore selected work <span aria-hidden="true">01 →</span></a>
+      </div>
+      <div class="hero-portrait" aria-hidden="true">
+        <span class="portrait-ring"></span>
+        <img src="{{ url_for('static', filename='images/liezel-formal-cutout.png') }}" alt="" />
+      </div>
+      <div class="hero-services" aria-label="Areas of focus">
+        <span>+ Full-stack development</span>
+        <span>+ Mobile experiences</span>
+        <span>+ Practical problem solving</span>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="about" class="py-5 bg-white">
-  <div class="container">
-    <h2 class="section-title">About Me</h2>
-    <p class="text-secondary mb-0">
-      I am a 4th-year IT student with leadership experience in university tech and esports organizations.
-      I enjoy building impactful systems that solve real user problems and prepare teams for scalable growth.
-    </p>
-  </div>
-</section>
-
-<section id="stack" class="py-5 bg-light">
-  <div class="container">
-    <h2 class="section-title">Tech Stack</h2>
-    <div class="row g-3">
-      {% for tech in tech_stack %}
-      <div class="col-6 col-md-4 col-lg-2">
-        <div class="tech-pill text-center">{{ tech }}</div>
+  <section id="projects" class="projects-section">
+    <div class="container">
+      <div class="section-bar"><p class="eyebrow">Selected projects</p><span>{{ '%02d'|format(projects|length) }} works</span></div>
+      <div class="project-grid">
+        {% for project in projects %}
+        <button class="project-card project-{{ loop.index }}" type="button" data-project-name="{{ project.name }}" data-project-category="{{ project.category }}" data-project-details="{{ project.details }}" data-project-stack="{{ project.stack|join(', ') }}" aria-haspopup="dialog">
+          <div class="project-visual"><span class="visual-label">{{ project.name }}</span><span class="visual-orbit"></span><span class="visual-window"></span></div>
+          <div class="project-info"><div><h2>{{ project.name }}</h2><p>{{ project.category }}</p></div><span class="project-number">0{{ loop.index }}<b>→</b></span></div>
+          <p class="project-description">{{ project.description }}</p>
+          <span class="project-hint">View project details</span>
+        </button>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="projects" class="py-5 bg-white">
-  <div class="container">
-    <h2 class="section-title">Projects Gallery</h2>
-    <div class="row g-4">
-      {% for project in projects %}
-      <div class="col-md-6">
-        <div class="card project-card h-100 border-0 shadow-sm">
-          <div class="card-body">
-            <h3 class="h5 mb-2">{{ project.name }}</h3>
-            <p class="text-primary small fw-semibold">{{ project.category }}</p>
-            <p class="text-secondary mb-0">{{ project.description }}</p>
+  <section id="about" class="details-section">
+    <div class="container details-grid">
+      <div class="education-block">
+        <p class="eyebrow">Education &amp; skills</p>
+        <h2 class="detail-title">Learning by<br /><em>building.</em></h2>
+        <div class="education-item"><span>Education</span>{% for item in education %}<strong>{{ item.degree }} <i>{{ item.years }}</i></strong><small>{{ item.school }} · {{ item.location }}</small>{% endfor %}</div>
+        <div class="skills-block">
+          <span>Skills</span>
+          <div class="skill-tabs" role="tablist" aria-label="Skill categories">
+            {% for category, items in skills.items() %}
+            <button class="skill-tab{% if loop.first %} is-active{% endif %}" id="skill-tab-{{ loop.index }}" type="button" role="tab" aria-controls="skill-panel-{{ loop.index }}" aria-selected="{{ 'true' if loop.first else 'false' }}" data-skill-category="{{ category }}">{{ category }}</button>
+            {% endfor %}
+          </div>
+          <div class="skill-list" aria-live="polite">
+            {% for category, items in skills.items() %}
+            <div class="skill-group{% if loop.first %} is-active{% endif %}" id="skill-panel-{{ loop.index }}" role="tabpanel" aria-labelledby="skill-tab-{{ loop.index }}" data-skill-group="{{ category }}">{% for item in items %}<span>{{ item }}</span>{% endfor %}</div>
+            {% endfor %}
           </div>
         </div>
       </div>
-      {% endfor %}
+      <div class="process-block">
+        <p class="eyebrow">How I work</p>
+        <h2 class="detail-title">A process with<br /><em>purpose.</em></h2>
+        <ol class="process-list">
+          <li><b>01</b><span><strong>Discover</strong><small>Understand the people and the problem</small></span></li>
+          <li><b>02</b><span><strong>Plan</strong><small>Map the flow and choose the right tools</small></span></li>
+          <li><b>03</b><span><strong>Build</strong><small>Turn ideas into useful, working software</small></span></li>
+          <li><b>04</b><span><strong>Refine</strong><small>Test, learn, and make the experience better</small></span></li>
+        </ol>
+      </div>
+      <blockquote class="quote-block">“Good software is not just how it looks, but how it <em>works.</em>”<cite>Liezel Lay</cite></blockquote>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="contact" class="py-5 bg-dark text-white">
-  <div class="container">
-    <h2 class="section-title text-white">Contact</h2>
-    <div class="d-flex flex-wrap gap-3 align-items-center">
-      <a class="btn btn-outline-light" href="https://github.com/your-username" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a class="btn btn-outline-light" href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a class="btn btn-primary btn-lg" href="{{ url_for('static', filename='resume.pdf') }}" download>Download Resume</a>
+  <section class="involvement-section">
+    <div class="container">
+      <div class="section-bar"><p class="eyebrow">Involvement &amp; activities</p><span>Leadership beyond the screen</span></div>
+      <div class="involvement-list">{% for item in involvement %}<article class="involvement-item"><span class="involvement-period">{{ item.period }}</span><div><h2>{{ item.role }}</h2><p>{{ item.organization }}</p><small>{{ item.description }}</small></div></article>{% endfor %}</div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="container contact-grid">
+      <div><p class="eyebrow">Have a project in mind?</p><h2 class="contact-title">Let's work<br /><em>together.</em></h2><p class="contact-copy">I'm currently open to opportunities, collaborations, and good conversations about technology.</p><a class="hero-link" href="mailto:{{ profile.email }}">{{ profile.email }} <span aria-hidden="true">↗</span></a></div>
+      <div class="contact-links"><a href="mailto:{{ profile.email }}"><span>✉</span> {{ profile.email }} <b>↗</b></a><a href="mailto:{{ profile.school_email }}"><span>EDU</span> {{ profile.school_email }} <b>↗</b></a><a href="tel:{{ profile.phone|replace(' ', '') }}"><span>PH</span> {{ profile.phone }} <b>↗</b></a><a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer"><span>in</span> LinkedIn profile <b>↗</b></a><a href="#top"><span>↑</span> Back to the top <b>↗</b></a><p class="contact-note">{{ profile.name }} / {{ profile.role }}</p></div>
+    </div>
+  </section>
+</main>
+<div class="project-modal" id="project-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-project-name">
+  <div class="project-modal__backdrop" data-close-modal></div>
+  <section class="project-modal__panel" role="document">
+    <button class="modal-close" type="button" data-close-modal aria-label="Close project details">×</button>
+    <p class="eyebrow">Selected project</p>
+    <h2 id="modal-project-name"></h2>
+    <p class="modal-category" id="modal-project-category"></p>
+    <p class="modal-details" id="modal-project-details"></p>
+    <div class="modal-stack" id="modal-project-stack"></div>
+  </section>
+</div>
 {% endblock %}

@@ -3,7 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Portfolio | IT Graduate</title>
+    <title>Liezel A. Ybañez | Project Manager &amp; Frontend Developer</title>
+    <meta name="description" content="Portfolio of Liezel A. Ybañez, a project manager and frontend developer from Cebu City, Philippines." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -11,6 +15,80 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
   </head>
   <body>
+    <nav class="site-nav" aria-label="Main navigation">
+      <div class="container nav-inner">
+        <a class="brand-mark" href="#top" aria-label="Liezel home">L<span>.</span></a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Work</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
     {% block content %}{% endblock %}
+    <script>
+      const modal = document.querySelector('#project-modal');
+      const modalName = document.querySelector('#modal-project-name');
+      const modalCategory = document.querySelector('#modal-project-category');
+      const modalDetails = document.querySelector('#modal-project-details');
+      const modalStack = document.querySelector('#modal-project-stack');
+      let lastTrigger;
+
+      document.querySelectorAll('.project-card').forEach((card) => {
+        card.addEventListener('click', () => {
+          lastTrigger = card;
+          modalName.textContent = card.dataset.projectName;
+          modalCategory.textContent = card.dataset.projectCategory;
+          modalDetails.textContent = card.dataset.projectDetails;
+          modalStack.replaceChildren(...card.dataset.projectStack.split(', ').map((item) => {
+            const tag = document.createElement('span');
+            tag.textContent = item;
+            return tag;
+          }));
+          modal.classList.add('is-open');
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('modal-open');
+          modal.querySelector('.modal-close').focus();
+        });
+      });
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        lastTrigger?.focus();
+      }
+
+      document.querySelectorAll('[data-close-modal]').forEach((element) => element.addEventListener('click', closeModal));
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
+
+      const skillTabs = document.querySelectorAll('.skill-tab');
+      const skillGroups = document.querySelectorAll('.skill-group');
+      skillTabs.forEach((tab) => tab.addEventListener('click', () => {
+        skillTabs.forEach((item) => {
+          const selected = item === tab;
+          item.classList.toggle('is-active', selected);
+          item.setAttribute('aria-selected', String(selected));
+        });
+        skillGroups.forEach((group) => group.classList.toggle('is-active', group.dataset.skillGroup === tab.dataset.skillCategory));
+      }));
+      skillTabs.forEach((tab, index) => tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const nextIndex = event.key === 'Home' ? 0 : event.key === 'End' ? skillTabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + skillTabs.length) % skillTabs.length;
+        skillTabs[nextIndex].focus();
+        skillTabs[nextIndex].click();
+      }));
+
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const observedSections = document.querySelectorAll('main section[id]');
+      const navigationObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`));
+        });
+      }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+      observedSections.forEach((section) => navigationObserver.observe(section));
+    </script>
   </body>
 </html>
